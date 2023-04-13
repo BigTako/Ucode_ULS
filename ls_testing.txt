@@ -1,0 +1,200 @@
+total 712
+-rw-r--r--   1 alex  staff   1002 Mar 29 06:13 Makefile
+drwxr-xr-x   3 alex  staff     96 Mar 29 06:13 inc
+drwxr-xr-x   7 alex  staff    224 Apr  2 01:24 libmx
+-rw-r--r--   1 alex  staff  66231 Apr  2 01:36 ls_test.txt
+-rw-r--r--   1 alex  staff      0 Apr  3 00:45 ls_testing.txt
+lrwxr-xr-x   1 alex  staff      3 Apr  2 01:50 my_link -> src
+drwxr-xr-x  10 alex  staff    320 Apr  3 00:37 obj
+drwxr-xr-x  11 alex  staff    352 Apr  2 01:49 src
+drwxr-xr-x   6 alex  staff    192 Mar 31 12:42 test
+drwxr-xr-x   5 alex  staff    160 Apr  2 04:20 testdir
+-rwxr-xr-x   1 alex  staff  85184 Apr  3 00:37 uls
+-rw-r--r--   1 alex  staff  66231 Apr  2 01:35 uls_test.txt
+-rw-r--r--   1 alex  staff  10203 Apr  3 00:40 uls_testing.txt
+
+./inc:
+total 16
+-rw-r--r--  1 alex  staff  4585 Apr  2 06:15 header.h
+
+./libmx:
+total 336
+-rw-r--r--   1 alex  staff    1724 Mar 29 06:13 Makefile
+drwxr-xr-x   3 alex  staff      96 Mar 29 06:13 inc
+-rw-r--r--   1 alex  staff  167456 Apr  2 01:24 libmx.a
+drwxr-xr-x  65 alex  staff    2080 Apr  2 01:24 obj
+drwxr-xr-x  65 alex  staff    2080 Mar 29 06:13 src
+
+./libmx/inc:
+total 8
+-rw-r--r--  1 alex  staff  3768 Mar 29 06:13 libmx.h
+
+./libmx/obj:
+total 512
+-rw-r--r--  1 alex  staff  2240 Apr  2 01:24 array_utils.o
+-rw-r--r--  1 alex  staff  4120 Apr  2 01:24 list_utils.o
+-rw-r--r--  1 alex  staff  2624 Apr  2 01:24 mx_binary_search.o
+-rw-r--r--  1 alex  staff  2572 Apr  2 01:24 mx_bubble_sort.o
+-rw-r--r--  1 alex  staff  3816 Apr  2 01:24 mx_charis.o
+-rw-r--r--  1 alex  staff  2424 Apr  2 01:24 mx_count_substr.o
+-rw-r--r--  1 alex  staff  2428 Apr  2 01:24 mx_count_words.o
+-rw-r--r--  1 alex  staff  2236 Apr  2 01:24 mx_create_node.o
+-rw-r--r--  1 alex  staff  2772 Apr  2 01:24 mx_del_extra_spaces.o
+-rw-r--r--  1 alex  staff  2284 Apr  2 01:24 mx_del_strarr.o
+-rw-r--r--  1 alex  staff  2164 Apr  2 01:24 mx_digits_count.o
+-rw-r--r--  1 alex  staff  3200 Apr  2 01:24 mx_file_to_str.o
+-rw-r--r--  1 alex  staff  2176 Apr  2 01:24 mx_foreach.o
+-rw-r--r--  1 alex  staff  2260 Apr  2 01:24 mx_get_char_index.o
+-rw-r--r--  1 alex  staff  2416 Apr  2 01:24 mx_get_substr_index.o
+-rw-r--r--  1 alex  staff  2952 Apr  2 01:24 mx_hex_to_nbr.o
+-rw-r--r--  1 alex  staff  2492 Apr  2 01:24 mx_itoa.o
+-rw-r--r--  1 alex  staff  2336 Apr  2 01:24 mx_list_size.o
+-rw-r--r--  1 alex  staff  2164 Apr  2 01:24 mx_math.o
+-rw-r--r--  1 alex  staff  2768 Apr  2 01:24 mx_memccpy.o
+-rw-r--r--  1 alex  staff  2756 Apr  2 01:24 mx_memchr.o
+-rw-r--r--  1 alex  staff  2844 Apr  2 01:24 mx_memcmp.o
+-rw-r--r--  1 alex  staff  2532 Apr  2 01:24 mx_memcpy.o
+-rw-r--r--  1 alex  staff  2768 Apr  2 01:24 mx_memmem.o
+-rw-r--r--  1 alex  staff  2624 Apr  2 01:24 mx_memmove.o
+-rw-r--r--  1 alex  staff  2648 Apr  2 01:24 mx_memrchr.o
+-rw-r--r--  1 alex  staff  2564 Apr  2 01:24 mx_memset.o
+-rw-r--r--  1 alex  staff  2572 Apr  2 01:24 mx_nbr_to_hex.o
+-rw-r--r--  1 alex  staff  2484 Apr  2 01:24 mx_pop_back.o
+-rw-r--r--  1 alex  staff  2392 Apr  2 01:24 mx_pop_front.o
+-rw-r--r--  1 alex  staff  2268 Apr  2 01:24 mx_pow.o
+-rw-r--r--  1 alex  staff  2384 Apr  2 01:24 mx_print_strarr.o
+-rw-r--r--  1 alex  staff  3036 Apr  2 01:24 mx_print_unicode.o
+-rw-r--r--  1 alex  staff  1984 Apr  2 01:24 mx_printchar.o
+-rw-r--r--  1 alex  staff  2064 Apr  2 01:24 mx_printerr.o
+-rw-r--r--  1 alex  staff  2708 Apr  2 01:24 mx_printint.o
+-rw-r--r--  1 alex  staff  2064 Apr  2 01:24 mx_printstr.o
+-rw-r--r--  1 alex  staff  2368 Apr  2 01:24 mx_push_back.o
+-rw-r--r--  1 alex  staff  2368 Apr  2 01:24 mx_push_front.o
+-rw-r--r--  1 alex  staff  3132 Apr  2 01:24 mx_quicksort.o
+-rw-r--r--  1 alex  staff  3444 Apr  2 01:24 mx_read_line.o
+-rw-r--r--  1 alex  staff  2676 Apr  2 01:24 mx_realloc.o
+-rw-r--r--  1 alex  staff  2996 Apr  2 01:24 mx_replace_substr.o
+-rw-r--r--  1 alex  staff  3132 Apr  2 01:24 mx_sort_list.o
+-rw-r--r--  1 alex  staff  2292 Apr  2 01:24 mx_sqrt.o
+-rw-r--r--  1 alex  staff  2252 Apr  2 01:24 mx_str_reverse.o
+-rw-r--r--  1 alex  staff  2384 Apr  2 01:24 mx_strcat.o
+-rw-r--r--  1 alex  staff  2212 Apr  2 01:24 mx_strchr.o
+-rw-r--r--  1 alex  staff  3008 Apr  2 01:24 mx_strcmp.o
+-rw-r--r--  1 alex  staff  2156 Apr  2 01:24 mx_strcpy.o
+-rw-r--r--  1 alex  staff  2028 Apr  2 01:24 mx_strdel.o
+-rw-r--r--  1 alex  staff  2104 Apr  2 01:24 mx_strdup.o
+-rw-r--r--  1 alex  staff  2484 Apr  2 01:24 mx_strjoin.o
+-rw-r--r--  1 alex  staff  2124 Apr  2 01:24 mx_strlen.o
+-rw-r--r--  1 alex  staff  2264 Apr  2 01:24 mx_strncmp.o
+-rw-r--r--  1 alex  staff  2232 Apr  2 01:24 mx_strncpy.o
+-rw-r--r--  1 alex  staff  2640 Apr  2 01:24 mx_strndup.o
+-rw-r--r--  1 alex  staff  2268 Apr  2 01:24 mx_strnew.o
+-rw-r--r--  1 alex  staff  3068 Apr  2 01:24 mx_strsplit.o
+-rw-r--r--  1 alex  staff  2528 Apr  2 01:24 mx_strstr.o
+-rw-r--r--  1 alex  staff  2588 Apr  2 01:24 mx_strtrim.o
+-rw-r--r--  1 alex  staff  2056 Apr  2 01:24 mx_swap_char.o
+-rw-r--r--  1 alex  staff  2596 Apr  2 01:24 str_utils.o
+
+./libmx/src:
+total 504
+-rw-r--r--  1 alex  staff   236 Mar 29 06:13 array_utils.c
+-rw-r--r--  1 alex  staff   989 Mar 29 06:13 list_utils.c
+-rw-r--r--  1 alex  staff   413 Mar 29 06:13 mx_binary_search.c
+-rw-r--r--  1 alex  staff   365 Mar 29 06:13 mx_bubble_sort.c
+-rw-r--r--  1 alex  staff   575 Mar 29 06:13 mx_charis.c
+-rw-r--r--  1 alex  staff   316 Mar 29 06:13 mx_count_substr.c
+-rw-r--r--  1 alex  staff   411 Mar 29 06:13 mx_count_words.c
+-rw-r--r--  1 alex  staff   171 Mar 29 06:13 mx_create_node.c
+-rw-r--r--  1 alex  staff   454 Mar 29 06:13 mx_del_extra_spaces.c
+-rw-r--r--  1 alex  staff   161 Mar 29 06:13 mx_del_strarr.c
+-rw-r--r--  1 alex  staff   202 Mar 29 06:13 mx_digits_count.c
+-rw-r--r--  1 alex  staff   671 Mar 29 06:13 mx_file_to_str.c
+-rw-r--r--  1 alex  staff   155 Mar 29 06:13 mx_foreach.c
+-rw-r--r--  1 alex  staff   176 Mar 29 06:13 mx_get_char_index.c
+-rw-r--r--  1 alex  staff   353 Mar 29 06:13 mx_get_substr_index.c
+-rw-r--r--  1 alex  staff   596 Mar 29 06:13 mx_hex_to_nbr.c
+-rw-r--r--  1 alex  staff   386 Mar 29 06:13 mx_itoa.c
+-rw-r--r--  1 alex  staff   190 Mar 29 06:13 mx_list_size.c
+-rw-r--r--  1 alex  staff   123 Mar 29 06:13 mx_math.c
+-rw-r--r--  1 alex  staff   720 Mar 29 06:13 mx_memccpy.c
+-rw-r--r--  1 alex  staff   363 Mar 29 06:13 mx_memchr.c
+-rw-r--r--  1 alex  staff   431 Mar 29 06:13 mx_memcmp.c
+-rw-r--r--  1 alex  staff   213 Mar 29 06:13 mx_memcpy.c
+-rw-r--r--  1 alex  staff   451 Mar 29 06:13 mx_memmem.c
+-rw-r--r--  1 alex  staff   216 Mar 29 06:13 mx_memmove.c
+-rw-r--r--  1 alex  staff   244 Mar 29 06:13 mx_memrchr.c
+-rw-r--r--  1 alex  staff   202 Mar 29 06:13 mx_memset.c
+-rw-r--r--  1 alex  staff   403 Mar 29 06:13 mx_nbr_to_hex.c
+-rw-r--r--  1 alex  staff   401 Mar 29 06:13 mx_pop_back.c
+-rw-r--r--  1 alex  staff   326 Mar 29 06:13 mx_pop_front.c
+-rw-r--r--  1 alex  staff   188 Mar 29 06:13 mx_pow.c
+-rw-r--r--  1 alex  staff   242 Mar 29 06:13 mx_print_strarr.c
+-rw-r--r--  1 alex  staff   623 Mar 29 06:13 mx_print_unicode.c
+-rw-r--r--  1 alex  staff    76 Mar 29 06:13 mx_printchar.c
+-rw-r--r--  1 alex  staff    93 Mar 29 06:13 mx_printerr.c
+-rw-r--r--  1 alex  staff   370 Mar 29 06:13 mx_printint.c
+-rw-r--r--  1 alex  staff    93 Mar 29 06:13 mx_printstr.c
+-rw-r--r--  1 alex  staff   279 Mar 29 06:13 mx_push_back.c
+-rw-r--r--  1 alex  staff   213 Mar 29 06:13 mx_push_front.c
+-rw-r--r--  1 alex  staff   942 Mar 29 06:13 mx_quicksort.c
+-rw-r--r--  1 alex  staff  1500 Mar 29 06:13 mx_read_line.c
+-rw-r--r--  1 alex  staff   336 Mar 29 06:13 mx_realloc.c
+-rw-r--r--  1 alex  staff   722 Mar 29 06:13 mx_replace_substr.c
+-rw-r--r--  1 alex  staff   641 Mar 29 06:13 mx_sort_list.c
+-rw-r--r--  1 alex  staff   182 Mar 29 06:13 mx_sqrt.c
+-rw-r--r--  1 alex  staff   159 Mar 29 06:13 mx_str_reverse.c
+-rw-r--r--  1 alex  staff   274 Mar 29 06:13 mx_strcat.c
+-rw-r--r--  1 alex  staff   186 Mar 29 06:13 mx_strchr.c
+-rw-r--r--  1 alex  staff   484 Mar 29 06:13 mx_strcmp.c
+-rw-r--r--  1 alex  staff   198 Mar 29 06:13 mx_strcpy.c
+-rw-r--r--  1 alex  staff    97 Mar 29 06:13 mx_strdel.c
+-rw-r--r--  1 alex  staff   117 Mar 29 06:13 mx_strdup.c
+-rw-r--r--  1 alex  staff   303 Mar 29 06:13 mx_strjoin.c
+-rw-r--r--  1 alex  staff   133 Mar 29 06:13 mx_strlen.c
+-rw-r--r--  1 alex  staff   201 Mar 29 06:13 mx_strncmp.c
+-rw-r--r--  1 alex  staff   223 Mar 29 06:13 mx_strncpy.c
+-rw-r--r--  1 alex  staff   287 Mar 29 06:13 mx_strndup.c
+-rw-r--r--  1 alex  staff   199 Mar 29 06:13 mx_strnew.c
+-rw-r--r--  1 alex  staff   646 Mar 29 06:13 mx_strsplit.c
+-rw-r--r--  1 alex  staff   390 Mar 29 06:13 mx_strstr.c
+-rw-r--r--  1 alex  staff   345 Mar 29 06:13 mx_strtrim.c
+-rw-r--r--  1 alex  staff   129 Mar 29 06:13 mx_swap_char.c
+-rw-r--r--  1 alex  staff   237 Mar 29 06:13 str_utils.c
+
+./obj:
+total 200
+-rw-r--r--  1 alex  staff   5608 Apr  2 06:15 comparing.o
+-rw-r--r--  1 alex  staff  13532 Apr  2 06:15 file_info_output.o
+-rw-r--r--  1 alex  staff  11336 Apr  3 00:08 file_tree.o
+-rw-r--r--  1 alex  staff   9632 Apr  2 06:57 file_utils.o
+-rw-r--r--  1 alex  staff  17476 Apr  3 00:08 get_file_data.o
+-rw-r--r--  1 alex  staff   5920 Apr  2 06:15 main.o
+-rw-r--r--  1 alex  staff  13092 Apr  3 00:37 processing.o
+-rw-r--r--  1 alex  staff   4580 Apr  2 06:20 validation.o
+
+./src:
+total 96
+-rw-r--r--  1 alex  staff   887 Mar 29 06:13 comparing.c
+-rw-r--r--  1 alex  staff  5293 Apr  2 01:25 file_info_output.c
+-rw-r--r--  1 alex  staff  4807 Apr  3 00:05 file_tree.c
+-rw-r--r--  1 alex  staff  3106 Apr  2 06:54 file_utils.c
+-rw-r--r--  1 alex  staff  6486 Apr  3 00:01 get_file_data.c
+-rw-r--r--  1 alex  staff   923 Mar 31 11:38 main.c
+lrwxr-xr-x  1 alex  staff     7 Apr  2 01:49 my_link -> my_link
+-rw-r--r--  1 alex  staff  7323 Apr  3 00:37 processing.c
+-rw-r--r--  1 alex  staff   880 Mar 29 06:13 validation.c
+
+./test:
+total 0
+-rw-r--r--  1 alex  staff  0 Feb  1  2007 file1
+-rw-r--r--  1 alex  staff  0 Feb  1  2007 file2
+-rw-r--r--  1 alex  staff  0 Feb  1  2007 file3
+-rw-r--r--  1 alex  staff  0 Feb  1  2007 file4
+
+./testdir:
+total 0
+-rw-r--r--  1 alex  staff   0 Apr  2 02:26 file1
+-rw-r--r--  1 alex  staff   0 Apr  2 04:20 file2
+drwxr-xr-x  2 alex  staff  64 Apr  2 02:32 innerdir
+
+./testdir/innerdir:

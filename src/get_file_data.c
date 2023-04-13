@@ -6,7 +6,7 @@ char get_file_type(mode_t mode)
 	{
         case S_IFBLK:  
         	return 'b';
-        case S_IFCHR:  
+        case S_IFCHR:   
         	return 'c';
         case S_IFDIR:  
         	return 'd';
@@ -82,23 +82,18 @@ char * get_file_permissions(mode_t mode)
 
 char * get_owner_by_id(uid_t uid, char ftype)
 {
+	ftype = 0;
 	errno = 0;
-	if (ftype == 'b' || ftype == 'c')
+	struct passwd * pws;
+	pws = getpwuid(uid);
+	
+	if (pws)
 	{
-		return "root";
+		return mx_strdup(pws->pw_name);
 	}
 	else
-	{
-		struct passwd * pws;
-		pws = getpwuid(uid);
-		if (pws)
-		{
-			return pws->pw_name;
-		}
-		else
-		{	
-			return mx_itoa(uid);
-		}
+	{	
+		return mx_itoa(uid);
 	}
 }
 
@@ -109,7 +104,7 @@ char * get_group_by_id(uid_t gid)
 	g = getgrgid(gid);
 	if (g)
 	{
-		return g->gr_name;
+		return mx_strdup(g->gr_name);
 	}
 	else
 	{
@@ -140,7 +135,7 @@ char * get_time_str(time_t t){
 	{
 		result = mx_strcat(mx_strcat(result, " "), parts[3]);
 	}
-	mx_del_strarr(&parts);
+	//mx_del_strarr(&parts);
 	//free(time_str);
 	return result;
 }
@@ -170,7 +165,7 @@ t_file_info * get_file_data(struct stat * stats, char * path)
 
 static char * relate_path(char * path, char * name)
 {
-	if (path || name)
+	if (path && name)
 	{
 		char * file_path = mx_strnew(mx_strlen(path) + mx_strlen(name) + 1);
 		file_path = mx_strcpy(file_path, path);
@@ -178,7 +173,7 @@ static char * relate_path(char * path, char * name)
 		mx_strcpy(file_path + mx_strlen(path) + 1, name);
 		return file_path;
 	}
-	return malloc(1);
+	return NULL;
 }
 
 t_list * read_files_fro_dir(char * path, int mode)
@@ -191,6 +186,7 @@ t_list * read_files_fro_dir(char * path, int mode)
 	{
 		char * name = temp->d_name;
 		char * file_path = relate_path(path, name);
+		if (!file_path) continue;
 		lstat(file_path, &stats);
 		if (mode == USUAL && name[0] != '.'){
 			mx_push_back(&names, get_file_data(&stats, file_path));
@@ -213,6 +209,40 @@ t_list * read_files_fro_dir(char * path, int mode)
 	closedir(dir);
 	return names;
 }	
+
+t_filetree_node * read_files_fro_dir_tree(char * path, char * flags, int mode)
+{ // reads all filenames from folder and returns a list containing them
+	if (!path) return NULL;
+	struct stat stats;
+	t_filetree_node * names = NULL;
+	DIR * dir = opendir(path);
+	for (struct dirent * temp = readdir(dir); temp ; temp = readdir(dir))
+	{
+		char * name = temp->d_name;
+		char * file_path = relate_path(path, name);
+		lstat(file_path, &stats);
+		if (mode == USUAL && name[0] != '.')
+		{
+			smart_insert(&names, flags, get_file_data(&stats, file_path));
+		}
+		else if (mode == MODEA && 
+				mx_strcmp(name, ".") && 
+				mx_strcmp(name, ".."))
+		{
+			smart_insert(&names, flags, get_file_data(&stats, file_path));
+		}
+		else if (mode == ALL)
+		{
+			smart_insert(&names, flags, get_file_data(&stats, file_path));
+		}
+		else
+		{
+			free(file_path);
+		}
+	}
+	closedir(dir);
+	return names;
+}
 
 char ** get_eattrs(char * path)
 {

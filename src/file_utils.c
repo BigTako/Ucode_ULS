@@ -32,7 +32,7 @@ void delete_finfo(void * ptr)
 		free(fi->group_name);	
 	}
 	if (malloc_size(fi->path)){
-		free(fi->path);	
+		free(fi->path);
 	}
 	free(fi);
 }

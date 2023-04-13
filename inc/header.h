@@ -127,6 +127,32 @@ void print_fullf_info(t_list * info, t_fname_print_func print_fname, int * param
 void handle(t_list ** files, char * flags);
 //------------------------------------------->
 
+typedef struct node
+{
+    void * data;
+	int index;
+    struct node *left, *right;
+} t_filetree_node;
+
+//WORKING WITH FILETREE
+
+typedef bool (*t_sort_func)(void * a, void * b);
+typedef void (*t_fname_print_func)(t_file_info * file);
+typedef long long (*comparing_func) (t_filetree_node * a, t_filetree_node * b);
+long long compare_by_size(t_filetree_node * a, t_filetree_node * b);
+long long compare_by_path(t_filetree_node * a, t_filetree_node * b);
+long long compare_by_mtime(t_filetree_node * a, t_filetree_node * b);
+long long compare_by_atime(t_filetree_node * a, t_filetree_node * b);
+long long compare_by_ctime(t_filetree_node * a, t_filetree_node * b);
+void smart_insert(t_filetree_node ** tree, char * flags, void * data);
+t_filetree_node * read_files_fro_dir_tree(char * path, char * flags, int mode);
+//t_file_info * copy_finfo(t_file_info * template);
+void tree_files_classificate(t_list ** files, t_list ** dirs, t_filetree_node * node);
+void tree_to_list(t_filetree_node * root, t_list ** output, bool copy);
+void list_to_tree(t_list * list,t_filetree_node ** tree, char * flags ,bool copy);
+void display(t_filetree_node *root);
+void delete_tree(t_filetree_node ** leaf, void(*free_content)(void * ptr));
+
 #endif
 
 

@@ -1,5 +1,35 @@
 #include "../inc/header.h"
 
+void process_action_tree(t_filetree_node * file_tree, t_fname_print_func print_fname, bool print_tbsize, int* params)
+{
+	//int params[7] = {file_mode, action, time_mode, reversed_sort, full_time_format, human_friendly_size, print_eattrs};
+	t_list * items = NULL;
+	tree_to_list(file_tree, &items, true);
+	
+	switch (params[1])
+	{
+		case MULTICOL_OUT_I:
+			print_multicol(items, print_fname);
+			break;
+		case LONG_OUT_I:
+			if (print_tbsize)
+			{
+				print_total_bsize(items);
+			}
+			print_fullf_info(items, print_fname, params);
+			break;
+		case SINGLECOL_OUT_I:
+			for (t_list * i = items; i; i = i->next)
+			{
+				t_file_info * file = (t_file_info *)i->data;
+				print_fname(file);
+				mx_printstr("\n");
+			}
+			break;
+	}
+	//mx_clear_list(&items, NULL);
+}
+
 void process_action(t_list * items, t_fname_print_func print_fname, bool print_tbsize, int* params)
 {
 	//int params[7] = {file_mode, action, time_mode, reversed_sort, full_time_format, human_friendly_size, print_eattrs};
@@ -26,54 +56,48 @@ void process_action(t_list * items, t_fname_print_func print_fname, bool print_t
 	}
 }
 
-static void read_sort_process_clear(t_file_info * dir, t_sort_func sort_func, t_fname_print_func print_fname, bool print_bsize, int * params)
+static void read_sort_process_clear(t_file_info * dir, char * flags, t_fname_print_func print_fname, bool print_bsize, int * params)
 {
-	t_list * info = read_files_fro_dir(dir->path, params[0]);
-	mx_sort_list(info, sort_func, params[3]);
-	process_action(info, print_fname, print_bsize, params);
-	mx_clear_list(&info, delete_finfo);
+	t_filetree_node * tree = read_files_fro_dir_tree(dir->path, flags, params[0]);
+	process_action_tree(tree, print_fname, print_bsize, params);
+	//delete_tree(&tree, delete_finfo);
 }
 
-void deep_processing(t_list ** data, t_sort_func sort_func, t_fname_print_func print_fname, int * params)
+void deep_processing(t_filetree_node ** data, char * flags, t_fname_print_func print_fname, int * params)
 { 
 	//int params[8] = {file_mode, action, time_mode, reversed_sort, full_time_format, human_friendly_size, print_eattrs, recursive_out};
 	if (!*data || !print_fname || !params) return;
 	t_list * files = NULL;
 	t_list * dirs = NULL;
-	t_file_info * fi;
-	for (t_list * f = *data; f; f = f->next)
-	{
-		fi = f->data;
-		classificate(&files, &dirs, fi);
-	}
-	mx_sort_list(files, sort_func, params[3]);
-	mx_sort_list(dirs, sort_func, params[3]);		
-	process_action(*data, print_fname, 1, params);
+	
+	tree_files_classificate(&files, &dirs, *data);
+	process_action_tree(*data, print_fname, 1, params);
 	if (dirs)
 	{
 		t_file_info * dir;
 		for (t_list * i = dirs; i; i = i->next)
 		{
-			dir = i->data;
+			dir = (t_file_info *)(i->data);
+			if (!dir || !(dir->path) || (dir->path)[0] == '\0') continue;
 			char * dirname = fname_from_path(dir->path); 
 			if (mx_strcmp(dirname, ".") && mx_strcmp(dirname, ".."))
 			{
-				t_list * info = read_files_fro_dir(dir->path, params[0]);
-				if (mx_list_size(dirs) > 1){
+				t_filetree_node * info = read_files_fro_dir_tree(dir->path, flags, params[0]);
+				if (mx_list_size(dirs) > 0){
 					mx_printstr("\n");
 					mx_printstr(dir->path);
 					mx_printstr(":\n");
 				}
-				deep_processing(&info, sort_func, print_fname, params);
-				mx_clear_list(&info, delete_finfo);
+				deep_processing(&info, flags, print_fname, params);
+				//delete_tree(&info, delete_finfo);
 			}
 		}
 	}
-	mx_clear_list(&dirs, NULL);
-	mx_clear_list(&files, NULL);
+	//mx_clear_list(&dirs, NULL);
+	//mx_clear_list(&files, NULL);
 }
 
-void process_separately(t_list * files, t_list * dirs, t_sort_func sort_func, t_fname_print_func print_fname, int * params) 
+void process_separately(t_list * files, t_list * dirs, char * flags, t_fname_print_func print_fname, int * params) 
 // print separately names and files
 {   //int params[8] = {file_mode, action, time_mode, reversed_sort, full_time_format, human_friendly_size, print_eattrs, recursive_out};
 	if (params[7]) // recursive out
@@ -82,18 +106,17 @@ void process_separately(t_list * files, t_list * dirs, t_sort_func sort_func, t_
 		for (t_list * t = dirs; t; t = t->next)
 		{	
 			t_file_info * dir = t->data;
-			t_list * fs = read_files_fro_dir(dir->path, params[0]);
 			mx_printstr("\n");
 			mx_printstr(dir->path);
 			mx_printstr(":\n");
-			deep_processing(&fs, sort_func, print_fname, params);
-			mx_clear_list(&fs, delete_finfo);
+			t_filetree_node * tree = read_files_fro_dir_tree(dir->path, flags, params[0]);
+			deep_processing(&tree, flags, print_fname, params);
+			//delete_tree(&tree, delete_finfo);
 		}
 	}
 	else if (mx_list_size(files) == 0 && mx_list_size(dirs) == 1)
 	{
-		t_file_info * fi = (t_file_info *)dirs->data;
-		read_sort_process_clear(fi, sort_func, print_fname, 1, params);
+		read_sort_process_clear((t_file_info *)(dirs->data), flags, print_fname, 1, params);
 	}
 	else
 	{
@@ -106,48 +129,52 @@ void process_separately(t_list * files, t_list * dirs, t_sort_func sort_func, t_
 			t_file_info * dir = (t_file_info *)i->data;
 			mx_printstr(dir->path);
 			mx_printstr(":\n");
-			read_sort_process_clear(dir, sort_func, print_fname, 1, params);
+			read_sort_process_clear(dir, flags, print_fname, 1, params);
 			if (i->next) mx_printstr("\n");
 		}
 	}
 }
 
-
-void process_options(t_list ** info, t_sort_func sort_func, t_fname_print_func print_fname, int * params)
+void process_options(t_list ** info, char * flags, t_fname_print_func print_fname, int * params)
 { //int params[8] = {file_mode, action, time_mode, reversed_sort, full_time_format, human_friendly_size, print_eattrs, recursive_out};
-	if ( !sort_func || !print_fname || !params) return;
+	if (!info || !print_fname || !params) 
+	{	
+		return;
+	}
 	t_list * fs = NULL;
 	t_list * ds = NULL;
+	t_filetree_node * info_tree = NULL;
+
 	if (!*info) // no input files (print all files together)
 	{
+		//read a content of current dir to list and make a tree from list(with copies)
 		*info = read_files_fro_dir(".", params[0]);
-		mx_sort_list(*info, sort_func, params[3]);
 	}
 	else // some input files( print files and dirs separately )
 	{
-		t_file_info * fi;
-		for (t_list * f = *info; f; f = f->next)
+		//make a tree from list with copy of entire list content
+		for (t_list * i = *info; i; i = i->next)
 		{
-			fi = f->data;
-			classificate(&fs, &ds, fi);
+			classificate(&fs, &ds, i->data);
 		}
-		mx_sort_list(fs, sort_func, params[3]);
-		mx_sort_list(ds, sort_func, params[3]);
 	}
+	
+	list_to_tree(*info, &info_tree, flags, false);
 	if (fs || ds) // print separately
 	{
-		process_separately(fs, ds, sort_func, print_fname, params);
+		process_separately(fs, ds, flags, print_fname, params);
 	}
 	else if (params[7]) // recursive out
 	{
-		deep_processing(info, sort_func, print_fname, params);
+		deep_processing(&info_tree, flags, print_fname, params);
 	}
 	else
 	{
-		process_action(*info, print_fname, 1, params);
+		process_action_tree(info_tree, print_fname, 1, params);
 	}
-	if (fs) mx_clear_list(&fs, NULL);
-	if (ds) mx_clear_list(&ds, NULL);
+	//delete_tree(&info_tree, delete_finfo);
+	//if (fs) mx_clear_list(&fs, NULL);
+	//if (ds) mx_clear_list(&ds, NULL);
 }
 
 void handle(t_list ** files, char * flags)
@@ -244,6 +271,8 @@ void handle(t_list ** files, char * flags)
 					 full_time_format, human_friendly_size, print_eattrs,
 					 recursive_out};
 
-	process_options(files, sorting_func, fname_print_func, params);
+	process_options(files, flags, fname_print_func, params);
+	//delete_tree(&file_tree, delete_finfo);
+	//path is printed only to file and then 
 }
 

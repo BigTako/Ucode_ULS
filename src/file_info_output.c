@@ -198,9 +198,9 @@ void print_fullf_info(t_list * info, t_fname_print_func print_fname, int * param
 			char * minor = get_minor(fi);
 			int maj_len = mx_strlen(major);
 			int min_len = mx_strlen(minor);
-			str_repeat(max_size - min_len - maj_len - 1, " ");
+			str_repeat(max_size - min_len - maj_len, " ");
 			mx_printstr(major);
-			mx_printstr(",  ");
+			mx_printstr(",   ");
 			mx_printstr(minor);
 			size_str = mx_strdup("\0");
 			free(major);
