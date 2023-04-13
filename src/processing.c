@@ -4,7 +4,7 @@ void process_action_tree(t_filetree_node * file_tree, t_fname_print_func print_f
 {
 	//int params[7] = {file_mode, action, time_mode, reversed_sort, full_time_format, human_friendly_size, print_eattrs};
 	t_list * items = NULL;
-	tree_to_list(file_tree, &items, true);
+	tree_to_list(file_tree, &items, 'f');
 	
 	switch (params[1])
 	{
@@ -27,7 +27,7 @@ void process_action_tree(t_filetree_node * file_tree, t_fname_print_func print_f
 			}
 			break;
 	}
-	//mx_clear_list(&items, NULL);
+	mx_clear_list(&items, NULL);
 }
 
 void process_action(t_list * items, t_fname_print_func print_fname, bool print_tbsize, int* params)
@@ -60,7 +60,7 @@ static void read_sort_process_clear(t_file_info * dir, char * flags, t_fname_pri
 {
 	t_filetree_node * tree = read_files_fro_dir_tree(dir->path, flags, params[0]);
 	process_action_tree(tree, print_fname, print_bsize, params);
-	//delete_tree(&tree, delete_finfo);
+	delete_tree(&tree, delete_finfo);
 }
 
 void deep_processing(t_filetree_node ** data, char * flags, t_fname_print_func print_fname, int * params)
@@ -89,12 +89,12 @@ void deep_processing(t_filetree_node ** data, char * flags, t_fname_print_func p
 					mx_printstr(":\n");
 				}
 				deep_processing(&info, flags, print_fname, params);
-				//delete_tree(&info, delete_finfo);
+				delete_tree(&info, delete_finfo);
 			}
 		}
 	}
-	//mx_clear_list(&dirs, NULL);
-	//mx_clear_list(&files, NULL);
+	mx_clear_list(&dirs, NULL);
+	mx_clear_list(&files, NULL);
 }
 
 void process_separately(t_list * files, t_list * dirs, char * flags, t_fname_print_func print_fname, int * params) 
@@ -147,19 +147,18 @@ void process_options(t_list ** info, char * flags, t_fname_print_func print_fnam
 
 	if (!*info) // no input files (print all files together)
 	{
-		//read a content of current dir to list and make a tree from list(with copies)
 		*info = read_files_fro_dir(".", params[0]);
 	}
 	else // some input files( print files and dirs separately )
 	{
-		//make a tree from list with copy of entire list content
 		for (t_list * i = *info; i; i = i->next)
 		{
 			classificate(&fs, &ds, i->data);
 		}
 	}
 	
-	list_to_tree(*info, &info_tree, flags, false);
+	list_to_tree(*info, &info_tree, flags, 'f');
+
 	if (fs || ds) // print separately
 	{
 		process_separately(fs, ds, flags, print_fname, params);

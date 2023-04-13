@@ -120,7 +120,7 @@ char * get_time_str(time_t t){
    	char ** parts = mx_strsplit(time_str, ' ');
 	parts[3][5] = '\0'; // delete seconds from time
 	
-	result = mx_strnew(12);
+	result = mx_strnew(50);
 	result = mx_strcat(result, parts[1]);
 	if (mx_strlen(parts[2]) == 2)
 		result = mx_strcat(mx_strcat(result, " "), parts[2]);// DAY < 10
@@ -219,6 +219,7 @@ t_filetree_node * read_files_fro_dir_tree(char * path, char * flags, int mode)
 	for (struct dirent * temp = readdir(dir); temp ; temp = readdir(dir))
 	{
 		char * name = temp->d_name;
+		if(name[0] == '\0') continue;
 		char * file_path = relate_path(path, name);
 		lstat(file_path, &stats);
 		if (mode == USUAL && name[0] != '.')

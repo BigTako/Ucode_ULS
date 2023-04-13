@@ -148,8 +148,8 @@ void smart_insert(t_filetree_node ** tree, char * flags, void * data);
 t_filetree_node * read_files_fro_dir_tree(char * path, char * flags, int mode);
 //t_file_info * copy_finfo(t_file_info * template);
 void tree_files_classificate(t_list ** files, t_list ** dirs, t_filetree_node * node);
-void tree_to_list(t_filetree_node * root, t_list ** output, bool copy);
-void list_to_tree(t_list * list,t_filetree_node ** tree, char * flags ,bool copy);
+void tree_to_list(t_filetree_node * root, t_list ** output, char copy);
+void list_to_tree(t_list * list,t_filetree_node ** tree, char * flags ,char copy);
 void display(t_filetree_node *root);
 void delete_tree(t_filetree_node ** leaf, void(*free_content)(void * ptr));
 

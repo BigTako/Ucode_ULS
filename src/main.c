@@ -41,8 +41,8 @@ int main(int argc, char * argv[])
 	{
 		handle(&files, flags);
 	}
-	//mx_clear_list(&invalid_files, NULL);
-	//mx_clear_list(&files, delete_finfo);
+	mx_clear_list(&invalid_files, NULL);
+	mx_clear_list(&files, delete_finfo);
 	return 0;
 }
 

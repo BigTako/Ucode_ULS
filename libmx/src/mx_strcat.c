@@ -2,11 +2,14 @@
 
 char*mx_strcat(char *restrict s1, const char *restrict s2)
 {
-    int len1 = mx_strlen(s1);
-    int len2 = mx_strlen(s2);
-    s1[len2 + len1 + 1] = '\0';
-    for (int i = 0; i < len2 + len1 + 1; i++)
-        s1[len1 + i] = s2[i];
+    int s1Length = mx_strlen(s1);
+    int s2Length = mx_strlen(s2);
+
+    for (int i = s1Length, j = 0; j < s2Length + 1; i++, j++)
+    {
+        s1[i] = s2[j];
+    }
+
     return s1;
 }
 

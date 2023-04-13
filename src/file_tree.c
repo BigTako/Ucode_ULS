@@ -162,28 +162,42 @@ t_file_info * copy_finfo(t_file_info * template)
 	return NULL;
 }
 
-void tree_to_list(t_filetree_node * root, t_list ** output, bool copy)
+void tree_to_list(t_filetree_node * root, t_list ** output, char copy)
 {
 	if (!root) return;
 	tree_to_list(root->left, output, copy);
-	if (copy)
-		mx_push_back(output, copy_finfo((t_file_info *)(root->data)));
-	else
-		mx_push_back(output, (t_file_info *)(root->data));
+	switch(copy)
+	{
+		case 'f':
+			mx_push_back(output, copy_finfo((t_file_info *)(root->data)));
+			break;
+		case 's':
+			mx_push_back(output, mx_strdup(root->data));
+			break;
+		case '0':
+			mx_push_back(output, root->data);
+			break;
+	}
 	tree_to_list(root->right, output, copy);
 }
 
-void list_to_tree(t_list * list,t_filetree_node ** tree, char * flags ,bool copy)
+void list_to_tree(t_list * list,t_filetree_node ** tree, char * flags , char copy)
 {
 	if (!list) return;
 	for (t_list * i = list; i; i = i->next)
 	{
-		if (copy)
+		switch(copy)
 		{
-			smart_insert(tree, flags, copy_finfo((t_file_info *)(i->data)));
+			case 'f':
+				smart_insert(tree, flags, copy_finfo((t_file_info *)(i->data)));	
+				break;
+			case 's':
+				smart_insert(tree, flags, mx_strdup(i->data));	
+				break;
+			case '0':
+				smart_insert(tree, flags, i->data);
+				break;
 		}
-		else
-			smart_insert(tree, flags, i->data);
 	}	
 }
 
