@@ -181,7 +181,7 @@ void tree_to_list(t_filetree_node * root, t_list ** output, char copy)
 	tree_to_list(root->right, output, copy);
 }
 
-void list_to_tree(t_list * list,t_filetree_node ** tree, char * flags , char copy)
+void list_to_tree(t_list * list, t_filetree_node ** tree, char * flags , char copy)
 {
 	if (!list) return;
 	for (t_list * i = list; i; i = i->next)

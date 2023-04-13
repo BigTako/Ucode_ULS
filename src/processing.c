@@ -171,9 +171,9 @@ void process_options(t_list ** info, char * flags, t_fname_print_func print_fnam
 	{
 		process_action_tree(info_tree, print_fname, 1, params);
 	}
-	//delete_tree(&info_tree, delete_finfo);
-	//if (fs) mx_clear_list(&fs, NULL);
-	//if (ds) mx_clear_list(&ds, NULL);
+	delete_tree(&info_tree, delete_finfo);
+	if (fs) mx_clear_list(&fs, NULL);
+	if (ds) mx_clear_list(&ds, NULL);
 }
 
 void handle(t_list ** files, char * flags)
@@ -190,7 +190,6 @@ void handle(t_list ** files, char * flags)
 		action = SINGLECOL_OUT_I;
 	}
 	enum e_info_ids time_mode = MTIME_I;
-	t_sort_func sorting_func = cmp_fnames;
 	t_fname_print_func fname_print_func = print_fname_simple;
 	bool reversed_sort = 0;
 	bool full_time_format = 0;
@@ -237,22 +236,6 @@ void handle(t_list ** files, char * flags)
 	{
 		time_mode = CTIME_I;
 	}
-	if (mx_get_char_index(flags, 't') >= 0)
-	{
-		if (time_mode == MTIME_I){
-			sorting_func = cmp_fmtime;
-		}
-		else if (time_mode == ATIME_I){
-			sorting_func = cmp_fatime;
-		}
-		else if (time_mode == CTIME_I){
-			sorting_func = cmp_fctime;
-		}
-	}
-	if (mx_get_char_index(flags, 'S') >= 0)
-	{
-		sorting_func = cmp_fsize;
-	}
 	if (mx_get_char_index(flags, 'R') >= 0)
 	{
 		recursive_out = true;
@@ -271,7 +254,5 @@ void handle(t_list ** files, char * flags)
 					 recursive_out};
 
 	process_options(files, flags, fname_print_func, params);
-	//delete_tree(&file_tree, delete_finfo);
-	//path is printed only to file and then 
 }
 
