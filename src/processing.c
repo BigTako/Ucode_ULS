@@ -106,9 +106,11 @@ void process_separately(t_list * files, t_list * dirs, char * flags, t_fname_pri
 		for (t_list * t = dirs; t; t = t->next)
 		{	
 			t_file_info * dir = t->data;
-			mx_printstr("\n");
-			mx_printstr(dir->path);
-			mx_printstr(":\n");
+			//if(dirs_in_dir(dir->path, params[0])){
+				mx_printstr("\n");
+				mx_printstr(dir->path);
+				mx_printstr(":\n");
+			//}
 			t_filetree_node * tree = read_files_fro_dir_tree(dir->path, flags, params[0]);
 			deep_processing(&tree, flags, print_fname, params);
 			//delete_tree(&tree, delete_finfo);
@@ -153,7 +155,7 @@ void process_options(t_list ** info, char * flags, t_fname_print_func print_fnam
 	{
 		for (t_list * i = *info; i; i = i->next)
 		{
-			classificate(&fs, &ds, i->data);
+			classificate(&fs, &ds, i->data, flags);
 		}
 	}
 	

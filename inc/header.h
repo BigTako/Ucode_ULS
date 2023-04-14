@@ -81,7 +81,7 @@ typedef void (*t_fname_print_func)(t_file_info * file);
 //FILE UTILS
 void print_total_bsize(t_list * files);
 void delete_finfo(void * ptr);
-void classificate(t_list ** files, t_list ** dirs, t_file_info * file);
+void classificate(t_list ** files, t_list ** dirs, t_file_info * file, char * flags);
 long max_sizeof(t_list * info, enum e_info_ids ident);
 char * float_to_hfstr(float bytes, char * name);
 char * fname_from_path(char *  path);
@@ -110,6 +110,7 @@ char * get_group_by_id(uid_t gid);
 char * get_time_str(time_t t);
 t_file_info * get_file_data(struct stat * stats, char * path);
 t_list * read_files_fro_dir(char * path, int mode);
+bool dirs_in_dir(char * path, int mode);
 char ** get_eattrs(char * path);
 char * get_major(t_file_info * file);
 char * get_minor(t_file_info * file);

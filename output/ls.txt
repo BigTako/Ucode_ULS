@@ -1,0 +1,10 @@
+total 96$
+-rw-r--r--  1 nastroyki  staff   887 Apr 13 18:18 comparing.c$
+-rw-r--r--  1 nastroyki  staff  5293 Apr 13 18:18 file_info_output.c$
+-rw-r--r--  1 nastroyki  staff  5034 Apr 13 18:18 file_tree.c$
+-rw-r--r--  1 nastroyki  staff  3312 Apr 13 21:47 file_utils.c$
+-rw-r--r--  1 nastroyki  staff  6543 Apr 13 18:18 get_file_data.c$
+-rw-r--r--  1 nastroyki  staff   923 Apr 13 18:18 main.c$
+lrwxr-xr-x  1 nastroyki  staff     7 Apr 13 18:18 my_link -> my_link$
+-rw-r--r--  1 nastroyki  staff  6786 Apr 13 21:05 processing.c$
+-rw-r--r--  1 nastroyki  staff   880 Apr 13 18:18 validation.c$

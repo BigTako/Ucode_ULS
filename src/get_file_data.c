@@ -210,6 +210,44 @@ t_list * read_files_fro_dir(char * path, int mode)
 	return names;
 }	
 
+bool dirs_in_dir(char * path, int mode)
+{ // check if dir have another dirs
+	if (!path) return NULL;
+	bool contain_dir = false;
+	struct stat stats;
+	DIR * dir = opendir(path);
+	for (struct dirent * temp = readdir(dir); temp ; temp = readdir(dir))
+	{
+		char * name = temp->d_name;
+		char * file_path = relate_path(path, name);
+		if (!file_path) continue;
+		lstat(file_path, &stats);
+		if (mode == USUAL && name[0] != '.'){
+			if(get_file_type(stats.st_mode) == 'd') {
+				contain_dir = true;
+				free(file_path);
+				break;
+			}
+		}
+		else if ((mode == MODEA || mode == ALL)&& 
+				mx_strcmp(name, ".") && 
+				mx_strcmp(name, ".."))
+		{
+			if(get_file_type(stats.st_mode) == 'd') {
+				contain_dir = true;
+				free(file_path);
+				break;
+			}
+		}
+		else
+		{
+			free(file_path);
+		}
+	}
+	closedir(dir);
+	return contain_dir;
+}
+
 t_filetree_node * read_files_fro_dir_tree(char * path, char * flags, int mode)
 { // reads all filenames from folder and returns a list containing them
 	if (!path) return NULL;

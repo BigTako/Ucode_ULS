@@ -110,16 +110,21 @@ long max_sizeof(t_list * info, enum e_info_ids ident)
 	return max;
 }
 
-void classificate(t_list ** files, t_list ** dirs, t_file_info * file)
+void classificate(t_list ** files, t_list ** dirs, t_file_info * file, char * flags)
 {
 	if (file){
-		if (file->type == '-'){ // valid file
+    if (file->type == '-'){ // valid file
+      mx_push_back(files, file);
+    }
+    else if (file->type == 'd' || file->type == 'l'){ // valid directory
+		if(file->type == 'l' && mx_get_char_index(flags, 'l') >= 0 && (file->path)[strlen(file->path) - 1] != '\\') {
 			mx_push_back(files, file);
 		}
-		else if (file->type == 'd'){ // valid directory
+		else {
 			mx_push_back(dirs, file);
 		}
-	}
+    }
+  }
 }
 
 char * float_to_hfstr(float bytes, char * name)
