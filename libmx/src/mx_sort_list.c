@@ -8,6 +8,7 @@ void swap_nums(t_list *a, t_list *b){
 
 t_list *mx_sort_list(t_list *list, bool(*cmp)(void*a, void*b), bool reversed)
 {
+	if (!list) return NULL;
 	t_list * init = list;  
 	for (t_list * temp_i = list; temp_i; temp_i = temp_i->next) {
 		for (t_list * temp_j = init; temp_j->next; temp_j = temp_j->next)

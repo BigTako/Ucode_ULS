@@ -190,6 +190,7 @@ void handle(t_list ** files, char * flags)
 		action = SINGLECOL_OUT_I;
 	}
 	enum e_info_ids time_mode = MTIME_I;
+	t_sort_func sorting_func = cmp_fnames;
 	t_fname_print_func fname_print_func = print_fname_simple;
 	bool reversed_sort = 0;
 	bool full_time_format = 0;
@@ -236,6 +237,22 @@ void handle(t_list ** files, char * flags)
 	{
 		time_mode = CTIME_I;
 	}
+	if (mx_get_char_index(flags, 't') >= 0)
+	{
+		if (time_mode == MTIME_I){
+			sorting_func = cmp_fmtime;
+		}
+		else if (time_mode == ATIME_I){
+			sorting_func = cmp_fatime;
+		}
+		else if (time_mode == CTIME_I){
+			sorting_func = cmp_fctime;
+		}
+	}
+	if (mx_get_char_index(flags, 'S') >= 0)
+	{
+		sorting_func = cmp_fsize;
+	}
 	if (mx_get_char_index(flags, 'R') >= 0)
 	{
 		recursive_out = true;
@@ -253,6 +270,7 @@ void handle(t_list ** files, char * flags)
 					 full_time_format, human_friendly_size, print_eattrs,
 					 recursive_out};
 
+	mx_sort_list(*files, sorting_func, reversed_sort);
 	process_options(files, flags, fname_print_func, params);
 }
 

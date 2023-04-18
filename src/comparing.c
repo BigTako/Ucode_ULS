@@ -4,7 +4,7 @@ bool cmp_fnames(void * a, void * b)
 {
 	t_file_info * ta = a;
 	t_file_info * tb = b;
-	return mx_strcmp(fname_from_path(ta->path), fname_from_path(tb->path)) > 0;
+	return mx_strcmp(ta->path, tb->path) > 0;
 }
 
 bool cmp_fmtime(void * a, void * b)
