@@ -135,7 +135,7 @@ char * get_time_str(time_t t){
 	{
 		result = mx_strcat(mx_strcat(result, " "), parts[3]);
 	}
-	//mx_del_strarr(&parts);
+	mx_del_strarr(&parts);
 	//free(time_str);
 	return result;
 }

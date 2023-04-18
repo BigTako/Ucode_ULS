@@ -27,7 +27,7 @@ void process_action_tree(t_filetree_node * file_tree, t_fname_print_func print_f
 			}
 			break;
 	}
-	mx_clear_list(&items, NULL);
+	mx_clear_list(&items, delete_finfo);
 }
 
 void process_action(t_list * items, t_fname_print_func print_fname, bool print_tbsize, int* params)
