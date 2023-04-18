@@ -1,0 +1,56 @@
+./uls | ls - OK
+./uls file | ls file - OK
+./uls dir | ls dir - OK
+./uls file file | ls file file - OK
+./uls dir dir | ls dir dir - OK
+./uls file dir | ls file dir - OK
+./uls path_to_file | ls path_to_file - WRONG // ./uls prints filename but not filepath
+./uls path_to_file path_to_file | ls path_to_file path_to_file - WRONG // ./uls prints filenames but not filepaths 
+./uls path_to_dir | ls path_to_dir - OK
+./uls path_to_dir path_to_dir | ls path_to_dir path_to_dir - OK
+./uls path_to_file path_to_dir | ls path_to_file path_to_dir - WRONG // ./uls prints filename instead of filepath
+./uls {link_to_file} | ls {link_to_file} - WRONG // segfault in ./uls, ls prints link name or path looking what is given
+./uls {link_to_dir} | ls {link_to_dir} - OK
+./uls {link_to_file} {link_to_dir} | ls {link_to_file} {link_to_dir} - WRONG // segfault on ./uls (ls the same as file dir)
+
+./uls -R | ls -R - OK
+./uls -R file | ls -R file - OK
+./uls -R dir | ls -R dir - WRONG // extra new line and dirname in ./uls
+./uls -R file file | ls -R file file - OK
+./uls -R dir dir | ls -R dir dir - WRONG //extra spaces in ./uls
+./uls -R file dir | ls -R file dir - OK
+./uls -R path_to_file | ls -R path_to_file - 
+./uls -R path_to_file path_to_file | ls -R path_to_file path_to_file
+./uls -R path_to_dir | ls -R path_to_dir
+./uls -R path_to_dir path_to_dir | ls -R path_to_dir path_to_dir
+./uls -R path_to_file path_to_dir | ls -R path_to_file path_to_dir
+./uls -R {link} | ls -R {link}
+./uls -R {link}/ | ls -R {link}/
+
+./uls -l | ls -l
+./uls -l file | ls -l file
+./uls -l dir | ls -l dir
+./uls -l file file | ls -l file file
+./uls -l dir dir | ls -l dir dir
+./uls -l file dir | ls -l file dir
+./uls -l path_to_file | ls -l path_to_file
+./uls -l path_to_file path_to_file | ls -l path_to_file path_to_file
+./uls -l path_to_dir | ls -l path_to_dir
+./uls -l path_to_dir path_to_dir | ls -l path_to_dir path_to_dir
+./uls -l path_to_file path_to_dir | ls -l path_to_file path_to_dir
+./uls -l {link} | ls -l {link}
+./uls -l {link}/ | ls -l {link}/
+
+./uls -lR | ls -lR
+./uls -lR file | ls -lR file
+./uls -lR dir | ls -lR dir
+./uls -lR file file | ls -lR file file
+./uls -lR dir dir | ls -lR dir dir
+./uls -lR file dir | ls -lR file dir
+./uls -lR path_to_file | ls -lR path_to_file
+./uls -lR path_to_file path_to_file | ls -lR path_to_file path_to_file
+./uls -lR path_to_dir | ls -lR path_to_dir
+./uls -lR path_to_dir path_to_dir | ls -lR path_to_dir path_to_dir
+./uls -lR path_to_file path_to_dir | ls -lR path_to_file path_to_dir
+./uls -lR {link} | ls -lR {link}
+./uls -lR {link}/ | ls -lR {link}/

@@ -10,13 +10,30 @@ static void print_colorful(char * str, char * color)
 
 void print_fname_simple(t_file_info * file)
 {
-	if (file) mx_printstr(fname_from_path(file->path));
+	//if (file) mx_printstr(fname_from_path(file->path))
+	if (file)
+	{
+		if (file->from_user)
+			mx_printstr(file->path);
+		else
+		{
+			mx_printstr(fname_from_path(file->path));
+			//mx_printstr("im here\n");
+		}
+	}
+	//if (file) mx_printstr(file->path);
 }
 
 void print_fname_colorful(t_file_info * file)
 {
 	if (!file) return;
-	char * fname = fname_from_path(file->path);
+	char * fname = NULL;
+	if (file->from_user)
+		fname = mx_strdup(file->path);
+	else
+		fname = fname_from_path(file->path);
+	//char * fname = fname_from_path(file->path);
+	//char * fname = mx_strdup(file->path);
 	switch(file->type)
 	{
 		case '-': // simple file

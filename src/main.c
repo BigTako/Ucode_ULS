@@ -26,7 +26,7 @@ int main(int argc, char * argv[])
 			if (file_valid(argv[i]))
 			{
 				lstat(argv[i], &stats);
-				mx_push_back(&files, get_file_data(&stats, argv[i]));
+				mx_push_back(&files, get_file_data(&stats, argv[i], true));
 			}
 			else{
 				mx_push_back(&invalid_files, argv[i]);

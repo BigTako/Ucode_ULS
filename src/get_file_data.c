@@ -140,7 +140,7 @@ char * get_time_str(time_t t){
 	return result;
 }
 
-t_file_info * get_file_data(struct stat * stats, char * path)
+t_file_info * get_file_data(struct stat * stats, char * path, bool from_user)
 {
 	if (!stats || !path) return NULL;
 	t_file_info * elem = malloc(sizeof(struct s_file_info));
@@ -160,6 +160,7 @@ t_file_info * get_file_data(struct stat * stats, char * path)
 		elem->dev_id = stats->st_rdev;
 	}
 	elem->path = path;
+	elem->from_user = from_user;
 	return elem;
 }
 
@@ -189,17 +190,17 @@ t_list * read_files_fro_dir(char * path, int mode)
 		if (!file_path) continue;
 		lstat(file_path, &stats);
 		if (mode == USUAL && name[0] != '.'){
-			mx_push_back(&names, get_file_data(&stats, file_path));
+			mx_push_back(&names, get_file_data(&stats, file_path, false));
 		}
 		else if (mode == MODEA && 
 				mx_strcmp(name, ".") && 
 				mx_strcmp(name, ".."))
 		{
-			mx_push_back(&names, get_file_data(&stats, file_path));
+			mx_push_back(&names, get_file_data(&stats, file_path, false));
 		}
 		else if (mode == ALL)
 		{
-			mx_push_back(&names, get_file_data(&stats, file_path));
+			mx_push_back(&names, get_file_data(&stats, file_path, false));
 		}
 		else
 		{
@@ -224,17 +225,17 @@ t_filetree_node * read_files_fro_dir_tree(char * path, char * flags, int mode)
 		lstat(file_path, &stats);
 		if (mode == USUAL && name[0] != '.')
 		{
-			smart_insert(&names, flags, get_file_data(&stats, file_path));
+			smart_insert(&names, flags, get_file_data(&stats, file_path, false));
 		}
 		else if (mode == MODEA && 
 				mx_strcmp(name, ".") && 
 				mx_strcmp(name, ".."))
 		{
-			smart_insert(&names, flags, get_file_data(&stats, file_path));
+			smart_insert(&names, flags, get_file_data(&stats, file_path, false));
 		}
 		else if (mode == ALL)
 		{
-			smart_insert(&names, flags, get_file_data(&stats, file_path));
+			smart_insert(&names, flags, get_file_data(&stats, file_path, false));
 		}
 		else
 		{

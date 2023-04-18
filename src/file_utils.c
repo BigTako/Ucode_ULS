@@ -110,7 +110,7 @@ long max_sizeof(t_list * info, enum e_info_ids ident)
 	return max;
 }
 
-void classificate(t_list ** files, t_list ** dirs, t_file_info * file)
+void classificate(t_list ** files, t_list ** dirs, t_file_info * file, int action)
 {
 	if (file){
 		if (file->type == '-'){ // valid file
@@ -118,6 +118,34 @@ void classificate(t_list ** files, t_list ** dirs, t_file_info * file)
 		}
 		else if (file->type == 'd'){ // valid directory
 			mx_push_back(dirs, file);
+		}
+		else if (file->type == 'l')
+		{
+			char buf[256];
+			struct stat stats;
+			memset(buf, '\0', 256);
+			readlink(file->path, buf, 256);
+			lstat(buf, &stats);
+			char type = get_file_type((&stats)->st_mode);
+			if (type == '-')
+			{
+				mx_push_back(files, file);
+			}
+			else if (type == 'd' && action != LONG_OUT_I)
+			{
+				mx_push_back(dirs, file);
+			}
+			else if (type == 'd' && action == LONG_OUT_I)
+			{
+				if (buf[strlen(buf) - 1] == '/')
+				{
+					mx_push_back(dirs, file);
+				}
+				else
+				{
+					mx_push_back(files, file);
+				}
+			}
 		}
 	}
 }

@@ -153,7 +153,7 @@ void process_options(t_list ** info, char * flags, t_fname_print_func print_fnam
 	{
 		for (t_list * i = *info; i; i = i->next)
 		{
-			classificate(&fs, &ds, i->data);
+			classificate(&fs, &ds, i->data, params[1]);
 		}
 	}
 	
@@ -165,7 +165,7 @@ void process_options(t_list ** info, char * flags, t_fname_print_func print_fnam
 	}
 	else if (params[7]) // recursive out
 	{
-		deep_processing(&info_tree, flags, print_fname, params);
+		//deep_processing(&info_tree, flags, print_fname, params);
 	}
 	else
 	{
