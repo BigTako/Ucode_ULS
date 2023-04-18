@@ -53,6 +53,13 @@ typedef struct s_file_info
 	bool from_user;
 } t_file_info;
 
+typedef struct s_error_info
+{
+	char * filename;
+	int error;
+} t_error_info;
+t_error_info * new_error_info(char * filename, int error);
+
 enum e_info_ids
 {
 	TYPE_I,
@@ -99,7 +106,7 @@ bool lexiograph_ord(void * a, void * b);
 
 //VALIDATION
 bool flags_are_valid(char * flags);
-char * throw_file_message(char * filename, char * error);
+void throw_file_message(t_error_info * info);
 int file_valid(char * filename);
 //------------------------------------------->
 

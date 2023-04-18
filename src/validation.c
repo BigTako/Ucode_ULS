@@ -4,13 +4,27 @@
 int file_valid(char * filename)
 {
 	errno = 0;
+	char buf[256];
 	DIR * dir = opendir(filename);
 	if (errno != 0)
 	{
 		if (errno == ENOTDIR) 
 		{ 
-			if (filename[mx_strlen(filename) - 1] == '/') {
-				return 0;
+			if (filename[mx_strlen(filename) - 1] == '/')
+			{
+				mx_strncpy(buf, filename, strlen(filename) - 1);
+				//filename[strlen(filename) - 1] = '\0';
+				struct stat stats;
+				lstat(buf, &stats);
+				char type = get_file_type((&stats)->st_mode);
+				if (type != 'l')
+				{
+					return 0;
+				}
+				else
+				{
+					return 1;
+				}
 			}
 			return 1;
 		}
@@ -40,15 +54,15 @@ bool flags_are_valid(char * flags)
 	return true;
 }
 
-char * throw_file_message(char * filename, char * error)
+void throw_file_message(t_error_info * info)
 {
-	if (!filename || !error) return NULL;
-	char *r = mx_strnew(mx_strlen(filename) + mx_strlen(error) + 9);
-	r = mx_strcat(r, "uls: ");
-	r = mx_strcat(r, filename);
-	r = mx_strcat(r, ": ");
-	r = mx_strcat(r, error);
-	r = mx_strcat(r, "\n");
-	return r;
+	if (!file_valid(info->filename))
+	{
+		mx_printerr("uls: ");
+		mx_printerr(info->filename);
+		mx_printerr(": ");
+		mx_printerr(strerror(info->error));
+		mx_printerr("\n");
+	}
 }
 
