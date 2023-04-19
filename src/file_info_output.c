@@ -67,11 +67,15 @@ void print_fname_colorful(t_file_info * file)
 void print_multicol(t_list * names, void (*print_name)(t_file_info * file))
 {
 	if (!names) return;
-	struct winsize win;
-	// find window width
-	ioctl(STDOUT_FILENO, TIOCGWINSZ, &win);
-	int longest = max_sizeof(names, FNAME_I);;
-	int columns = win.ws_col / (longest + 2);
+	int longest = max_sizeof(names, FNAME_I);
+	int columns = 80 / (longest + 2);;
+	if (isatty(1)) // output is to terminal(1)
+	{
+		struct winsize win;
+		// find window width
+		ioctl(STDOUT_FILENO, TIOCGWINSZ, &win);
+		columns = win.ws_col / (longest + 2);
+	}
 	int rows = mx_ceil((float)mx_list_size(names) / (float)columns);
 	if (rows == 0) rows++;
 	//char * fname;

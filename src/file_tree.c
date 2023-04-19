@@ -157,6 +157,7 @@ t_file_info * copy_finfo(t_file_info * template)
 		if (template->type == 'c' || template->type == 'b')
 			elem->dev_id = template->dev_id;
 		elem->path = mx_strdup(template->path);
+		elem->from_user = template->from_user;
 		return elem;
 	}
 	return NULL;

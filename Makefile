@@ -46,4 +46,8 @@ uninstall:
 
 reinstall: uninstall all
 
-
+testing:
+	@printf "\033[31;1m./uls\033[0m \033[32;1m$(param)\033[0m\n"
+	@./uls -C $(param) | cat
+	@printf "\033[31;1mls\033[0m \033[32;1m$(param)\033[0m\n"
+	@ls -C $(param) | cat
