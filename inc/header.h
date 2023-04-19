@@ -99,7 +99,7 @@ bool lexiograph_ord(void * a, void * b);
 
 //VALIDATION
 bool flags_are_valid(char * flags);
-void throw_file_message(char * filename);
+char * throw_file_message(char * filename, char * error);
 int file_valid(char * filename);
 //------------------------------------------->
 

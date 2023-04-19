@@ -29,13 +29,14 @@ int main(int argc, char * argv[])
 				mx_push_back(&files, get_file_data(&stats, argv[i], true));
 			}
 			else{
-				mx_push_back(&invalid_files, argv[i]);
+				mx_push_back(&invalid_files, throw_file_message(argv[i], strerror(errno)));
 			}
+			errno = 0;
 		}
 	}
 	for (t_list * t = invalid_files; t; t = t->next)
 	{
-		throw_file_message(t->data);
+		mx_printerr(t->data);
 	}
 	if (!(!files && invalid_files))
 	{

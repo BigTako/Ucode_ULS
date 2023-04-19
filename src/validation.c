@@ -9,6 +9,9 @@ int file_valid(char * filename)
 	{
 		if (errno == ENOTDIR) 
 		{ 
+			if (filename[mx_strlen(filename) - 1] == '/') {
+				return 0;
+			}
 			return 1;
 		}
 		else // No such file or directory or any other error
@@ -17,7 +20,6 @@ int file_valid(char * filename)
 		}
 	}
 	closedir(dir);
-	errno = 0;
 	return 2; // directory
 }
 
@@ -38,16 +40,15 @@ bool flags_are_valid(char * flags)
 	return true;
 }
 
-void throw_file_message(char * filename)
+char * throw_file_message(char * filename, char * error)
 {
-	if (!file_valid(filename))
-	{
-		mx_printerr("uls: ");
-		mx_printerr(filename);
-		mx_printerr(": ");
-		mx_printerr(strerror(errno));
-		mx_printerr("\n");
-	}
-	errno = 0;
+	if (!filename || !error) return NULL;
+	char *r = mx_strnew(mx_strlen(filename) + mx_strlen(error) + 9);
+	r = mx_strcat(r, "uls: ");
+	r = mx_strcat(r, filename);
+	r = mx_strcat(r, ": ");
+	r = mx_strcat(r, error);
+	r = mx_strcat(r, "\n");
+	return r;
 }
 
