@@ -26,6 +26,7 @@ void delete_einfo(void * data)
 
 int main(int argc, char * argv[])
 {
+	int r = 0;
 	struct stat stats;
 	t_list * files = NULL;
 	t_list * invalid_files = NULL;
@@ -61,6 +62,7 @@ int main(int argc, char * argv[])
 	for (t_list * t = invalid_files; t; t = t->next)
 	{
 		throw_file_message(t->data);
+		r = 1;
 	}
 	if (!(!files && invalid_files))
 	{
@@ -68,7 +70,7 @@ int main(int argc, char * argv[])
 	}
 	mx_clear_list(&invalid_files, delete_einfo);
 	mx_clear_list(&files, delete_finfo);
-	return 0;
+	return r;
 }
 
 
